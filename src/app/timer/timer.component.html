@@ -1,0 +1,12 @@
+<!-- How to implement placeholder? -->
+<input [value]="getTaskName()" (input)="setTaskName($event.target.value)" />
+<span>{{displaySeconds}}</span>
+
+
+<button (click)='startTimer()'>Start timer!</button>
+<button (click)='pauseTimer()'>Pause timer!</button>
+<button (click)='saveDataPoint()'>Save data point!</button>
+
+<button (click)='getCommitmentList()'>Get commitments</button>
+
+<ul *ngFor="let commitment of commitments">{{ commitment.name }} </ul>
