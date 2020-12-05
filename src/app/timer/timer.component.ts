@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AlertService } from '../services/alert.service';
 import { CommitmentService } from '../services/commitment.service';
+import { ReminderService } from '../services/reminder.service';
 
 import { TaskService } from '../services/task.service';
 import { TimerService } from '../services/timer.service';
@@ -13,15 +16,12 @@ export class TimerComponent implements OnInit {
   public displaySeconds: string;
   public commitments = [];
 
-  private commitmentService: CommitmentService;
-  private timer: TimerService;
-  private task: TaskService;
+  private reminderSubscription: Subscription;
 
-  constructor(timer: TimerService, task: TaskService, commitment: CommitmentService) {
-    this.commitmentService = commitment;
-    this.timer = timer;
-    this.task = task;
-  }
+  constructor(private timer: TimerService,
+              private task: TaskService,
+              private reminder: ReminderService,
+              private alert: AlertService) { }
 
   ngOnInit(): void {
     this.timer.epochTimed.subscribe(
@@ -38,16 +38,6 @@ export class TimerComponent implements OnInit {
     this.timer.startTimer();
   }
 
-  public getCommitmentList(): void {
-    this.commitmentService.commitments.subscribe(
-      (x) => {
-        this.commitments.push(x);
-        console.log(x);
-      }
-    )
-    console.log(this.commitments.length);
-  }
-
   public getTaskName(): string {
     return this.task.name;
   }
@@ -58,4 +48,32 @@ export class TimerComponent implements OnInit {
   public setTaskName(name: string): void {
     this.task.setName(name);
   }
+
+  private setReminder(milliseconds: number) {
+    this.reminderSubscription = this.reminder.getReminderSubject().subscribe(
+      (value) => {
+        if (value) {
+          this.alert.alert("alaaarm");
+        }
+      }
+    )
+
+    this.reminder.toggleReminder(this.timer.epochTimed, milliseconds);
+  }
+
+  private unsetReminder() {
+    this.reminderSubscription.unsubscribe();
+    this.reminderSubscription = null;
+
+    this.reminder.toggleReminder();
+  }
+
+  public toggleReminder(milliseconds: number): void {
+    if (this.reminderSubscription) {
+      this.unsetReminder();
+    } else {
+      this.setReminder(milliseconds);
+    }
+  }
+
 }

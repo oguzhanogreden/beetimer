@@ -10,6 +10,8 @@ export class TimerService {
   public epochTimed = new BehaviorSubject<Duration>(Duration.fromMillis(0)); // seconds
   private interval;
 
+  private tick = 250;
+
   constructor() { }
 
   public startTimer() {
@@ -17,8 +19,8 @@ export class TimerService {
 
     } else {
       this.interval = setInterval(() => {
-        this.epochTimed.next(this.epochTimed.getValue().plus(1000));
-      }, 1000);
+        this.epochTimed.next(this.epochTimed.getValue().plus(this.tick));
+      }, this.tick);
     }
   }
 
