@@ -10,7 +10,7 @@ export class AlertService {
   public alerts = new Subject<Alert>();
   constructor() { }
 
-  public getAlertSubject(): Subject<Alert> {
+  public getAlerts(): Subject<Alert> {
     return this.alerts;
   }
 
@@ -20,4 +20,5 @@ export class AlertService {
 
     this.alerts.next(alert);
   }
+
 }

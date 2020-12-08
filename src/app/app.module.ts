@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TimerComponent } from './timer/timer.component';
 import { AlertDrawerComponent } from './alert-drawer/alert-drawer.component';
+import { ReminderComponent } from './components/reminder/reminder.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TimerComponent,
-    AlertDrawerComponent
+    AlertDrawerComponent,
+    ReminderComponent
   ],
   imports: [
     BrowserModule,

@@ -16,12 +16,9 @@ export class TimerComponent implements OnInit {
   public displaySeconds: string;
   public commitments = [];
 
-  private reminderSubscription: Subscription;
 
   constructor(private timer: TimerService,
-              private task: TaskService,
-              private reminder: ReminderService,
-              private alert: AlertService) { }
+              private task: TaskService) { }
 
   ngOnInit(): void {
     this.timer.epochTimed.subscribe(
@@ -49,31 +46,5 @@ export class TimerComponent implements OnInit {
     this.task.setName(name);
   }
 
-  private setReminder(milliseconds: number) {
-    this.reminderSubscription = this.reminder.getReminderSubject().subscribe(
-      (value) => {
-        if (value) {
-          this.alert.alert("alaaarm");
-        }
-      }
-    )
-
-    this.reminder.toggleReminder(this.timer.epochTimed, milliseconds);
-  }
-
-  private unsetReminder() {
-    this.reminderSubscription.unsubscribe();
-    this.reminderSubscription = null;
-
-    this.reminder.toggleReminder();
-  }
-
-  public toggleReminder(milliseconds: number): void {
-    if (this.reminderSubscription) {
-      this.unsetReminder();
-    } else {
-      this.setReminder(milliseconds);
-    }
-  }
 
 }

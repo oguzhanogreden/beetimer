@@ -2,4 +2,6 @@
 
 ## To-do
 
-- [ ] Extend Alarm model with audio alarm type.
+- [x] Extend Alarm model with audio alarm type. 
+- [ ] Make reminders minimally adjustable in ReminderComponent
+- [ ] Use the modeled reminder object in ReminderService
