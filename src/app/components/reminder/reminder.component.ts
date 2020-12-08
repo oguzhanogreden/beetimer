@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Reminder } from 'src/app/models/reminder.model';
 import { AlertService } from 'src/app/services/alert.service';
@@ -13,6 +14,8 @@ import { TimerService } from 'src/app/services/timer.service';
 export class ReminderComponent implements OnInit {
 
   public reminder: Reminder;
+  public playSound = new FormControl(true);
+  public frequencyMinutes  = new FormControl(25);
 
   private reminderSubscription: Subscription;
 
@@ -42,11 +45,11 @@ export class ReminderComponent implements OnInit {
     this.reminderService.toggleReminder();
   }
 
-  public toggleReminder(milliseconds: number): void {
+  public toggleReminder(): void {
     if (this.reminderSubscription) {
       this.unsetReminder();
     } else {
-      this.setReminder(milliseconds);
+      this.setReminder(this.frequencyMinutes.value * 60 * 1000);
     }
   }
 

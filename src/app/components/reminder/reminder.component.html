@@ -1,4 +1,9 @@
 <p>reminder works!</p>
 
-<input type="checkbox" />
-<button (click)='toggleReminder(1000)'>Toggle reminder</button>
+<label for="playSound">Play sound?</label>
+<input id="playSound" type="checkbox" [formControl]="playSound" />
+
+<label for="frequencyMinutes">How often? (minutes)</label>
+<input id="frequencyMinutes" type="number" [formControl]="frequencyMinutes" />
+
+<button (click)='toggleReminder()'>Toggle reminder</button>

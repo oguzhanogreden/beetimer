@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { TimerComponent } from './timer/timer.component';
 import { AlertDrawerComponent } from './alert-drawer/alert-drawer.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ReminderComponent } from './components/reminder/reminder.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
