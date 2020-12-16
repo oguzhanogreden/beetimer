@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Reminder } from 'src/app/models/reminder.model';
@@ -12,8 +12,8 @@ import { TimerService } from 'src/app/services/timer.service';
   styleUrls: ['./reminder.component.scss']
 })
 export class ReminderComponent implements OnInit {
+  @Input() id = 'default-reminder';
 
-  public reminder: Reminder;
   public playSound = new FormControl(true);
   public frequencyMinutes  = new FormControl(25);
 
@@ -26,30 +26,33 @@ export class ReminderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  private setReminder(milliseconds: number) {
-    this.reminderSubscription = this.reminderService.getReminderSubject().subscribe(
-      (value) => {
-        if (value) {
+  private onRemind(milliseconds: number) {
+    this.reminderService.toggleReminder(this.id, this.timer.epochTimed, milliseconds, true);
+
+    var reminder = this.reminderService.getReminder(this.id);
+    
+    this.reminderSubscription = reminder.remindSubject.subscribe(
+      (reminder) => {
+        if (reminder) {
           this.alert.alert("alaaarm");
         }
       }
     )
 
-    this.reminderService.toggleReminder(this.timer.epochTimed, milliseconds);
   }
 
   private unsetReminder() {
     this.reminderSubscription.unsubscribe();
     this.reminderSubscription = null;
 
-    this.reminderService.toggleReminder();
+    this.reminderService.toggleReminder(this.id);
   }
 
   public toggleReminder(): void {
     if (this.reminderSubscription) {
       this.unsetReminder();
     } else {
-      this.setReminder(this.frequencyMinutes.value * 60 * 1000);
+      this.onRemind(this.frequencyMinutes.value); // # * 60 * 1000);
     }
   }
 

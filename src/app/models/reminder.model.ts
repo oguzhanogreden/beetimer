@@ -1,4 +1,9 @@
+import { Subject, Subscription } from 'rxjs';
+
 export class Reminder {
-    playSound: boolean;
-    rate: number;
+    id: string;
+    playSoundOnRemind: boolean;
+    remindSubject: Subject<boolean>;
+    rateMs: number;
+    timerSubscription: Subscription;
 }

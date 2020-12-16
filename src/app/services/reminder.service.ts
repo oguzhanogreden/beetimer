@@ -1,45 +1,70 @@
 import { Injectable } from '@angular/core';
 import { Duration } from 'luxon';
 import { BehaviorSubject, Subject, Observable, Subscription } from 'rxjs';
+import { Reminder } from '../models/reminder.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReminderService {
   // this will check the timer, and decide if the user needs to see a notification
-  public reminder = new BehaviorSubject<boolean>(false); 
+  public reminders: Reminder[] = []; 
+  public reminder = new BehaviorSubject<Reminder>(null); 
 
   private timerSubscription: Subscription;
 
   constructor() { }
 
-  public getReminderSubject(): Subject<boolean> {
-    return this.reminder;
+  public getReminder(id: string): Reminder {
+    return this.reminders.filter((x) => x.id === id)[0];
   };
 
-  public toggleReminder(epochTimed?: BehaviorSubject<Duration>, everyMs?: number) {
-    if (this.timerSubscription) {
-      this.unsetReminder();
+  public deleteReminder(id: string): void {
+    this.reminders = this.reminders.filter((x) => x.id !== id);
+  }
+
+  //obsolete
+  public toggleReminder(id: string, epochTimed?: BehaviorSubject<Duration>, everyMs?: number, playSound?: boolean) {
+    let reminder = this.getReminder(id);
+    console.log(reminder);
+
+    if (reminder) {
+      this.unsetReminder(id);
     } else {
-      this.setReminder(epochTimed, everyMs);
+      this.setReminder(epochTimed, everyMs, playSound, id);
     }
   }
 
-  public setReminder(epochTimed: BehaviorSubject<Duration>, everyMs: number) {
-    this.timerSubscription = epochTimed.subscribe(
+  public setReminder(epochTimed: BehaviorSubject<Duration>, everyMs: number, playSound: boolean, id: string): Reminder {
+    var newReminder = new Reminder();
+
+    newReminder.playSoundOnRemind = playSound;
+    newReminder.rateMs = everyMs;
+    newReminder.id = id;
+    newReminder.remindSubject = new Subject<boolean>();
+
+    newReminder.timerSubscription = epochTimed.subscribe(
       (epoch) => {
         if ((epoch.valueOf() !== 0) && ((epoch.valueOf() % everyMs) === 0)) {
-          this.reminder.next(true);
-        } 
+          newReminder.remindSubject.next(true);
+        } else {
+          newReminder.remindSubject.next(null);
+        }
       }
     );
+
+    this.reminders.push(newReminder);
+    return newReminder;
   }
   
-  public unsetReminder() {
-    this.timerSubscription.unsubscribe();
-    this.timerSubscription = null;
+  //obsolete
+  public unsetReminder(id: string): void {
+    var reminder = this.getReminder(id);
+
+    reminder.timerSubscription.unsubscribe();
 
     // reset status
-    this.reminder.next(false);
+    reminder.remindSubject.complete();
+    this.deleteReminder(id);
   }
 }
