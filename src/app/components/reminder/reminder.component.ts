@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { PartialObserver, Subscription } from 'rxjs';
 import { Reminder } from 'src/app/models/reminder.model';
 import { AlertService } from 'src/app/services/alert.service';
 import { ReminderService } from 'src/app/services/reminder.service';
@@ -26,18 +26,21 @@ export class ReminderComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  private alertOnRemind(): PartialObserver<Boolean> {
+    return {
+      next: (reminder) => {
+        console.log("aor-observer");
+        if (reminder) {
+          this.alert.alert(this.id, this.playSound.value);
+        }
+      }
+    }
+  }
+
   private onRemind(milliseconds: number) {
     this.reminderService.toggleReminder(this.id, this.timer.epochTimed, milliseconds, true);
 
-    var reminder = this.reminderService.getReminder(this.id);
-    
-    this.reminderSubscription = reminder.remindSubject.subscribe(
-      (reminder) => {
-        if (reminder) {
-          this.alert.alert("alaaarm");
-        }
-      }
-    )
+    this.reminderSubscription = this.reminderService.subscribeToReminder(this.id, this.alertOnRemind())
 
   }
 

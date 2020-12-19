@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Duration } from 'luxon';
-import { BehaviorSubject, Subject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Subject, Observable, Subscription, PartialObserver } from 'rxjs';
 import { Reminder } from '../models/reminder.model';
 
 @Injectable({
@@ -66,5 +66,11 @@ export class ReminderService {
     // reset status
     reminder.remindSubject.complete();
     this.deleteReminder(id);
+  }
+
+  public subscribeToReminder(id: string, observer: PartialObserver<boolean>): Subscription {
+    var reminder = this.getReminder(id);
+
+    return reminder.remindSubject.subscribe(observer);
   }
 }

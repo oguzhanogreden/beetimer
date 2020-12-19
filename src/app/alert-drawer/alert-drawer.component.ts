@@ -22,9 +22,9 @@ export class AlertDrawerComponent implements OnInit, OnDestroy {
       } else {
         this.alerts.push(alert);
 
-        this.playNotificationSound();
-
-        console.log(this.alerts);
+        if (alert.playSound) {
+          this.playNotificationSound();
+        }
       }
     });
   }

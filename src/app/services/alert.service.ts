@@ -14,11 +14,16 @@ export class AlertService {
     return this.alerts;
   }
 
-  public alert(message: string) {
+  public alert(message: string, playSound: boolean) {
     var alert = new Alert();
     alert.message = message;
+    alert.playSound = playSound;
 
     this.alerts.next(alert);
+  }
+
+  public alertOnReminder() {
+    
   }
 
 }
