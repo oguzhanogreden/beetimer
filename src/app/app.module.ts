@@ -7,6 +7,14 @@ import { TimerComponent } from './timer/timer.component';
 import { AlertDrawerComponent } from './alert-drawer/alert-drawer.component';
 import { ReminderComponent } from './components/reminder/reminder.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatButtonModule } from '@angular/material/button'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatCardModule } from '@angular/material/card'
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatGridListModule } from '@angular/material/grid-list'
+import { MatInputModule } from '@angular/material/input'
 
 @NgModule({
   declarations: [
@@ -18,7 +26,14 @@ import { ReactiveFormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatInputModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,9 +1,28 @@
-<p>reminder works!</p>
+<mat-card>
+    <div class="container-fluid">
+        <h3>Reminder</h3>
+        <div class="row">
+            <div class="col">
+                <mat-form-field>
+                    <mat-label>Frequency</mat-label>
+                    <input matInput type="number" [formControl]="frequencyMinutes" />
+                    <mat-hint align="end">minutes</mat-hint>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-card-actions>
+            <div class="row">
+                <div class="col">
+                    <button mat-raised-button (click)='toggleReminder()'>Toggle reminder</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-checkbox  [formControl]="playSound" labelPosition="before">Sound on?</mat-checkbox> 
+                </div>
+            </div>
+        </mat-card-actions>
 
-<label for="playSound">Play sound?</label>
-<input id="playSound" type="checkbox" [formControl]="playSound" />
+    </div>
 
-<label for="frequencyMinutes">How often? (minutes)</label>
-<input id="frequencyMinutes" type="number" [formControl]="frequencyMinutes" />
-
-<button (click)='toggleReminder()'>Toggle reminder</button>
+</mat-card>

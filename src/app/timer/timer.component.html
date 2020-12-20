@@ -1,15 +1,18 @@
-<!-- How to implement placeholder? -->
-<input [value]="getTaskName()" (input)="setTaskName($event.target.value)" />
-<span>{{displaySeconds}}</span>
-
-
-
-<button (click)='startTimer()'>Start timer!</button>
-<button (click)='pauseTimer()'>Pause timer!</button>
-
-<button (click)='saveDataPoint()'>Save data point!</button>
-
-<br>
-<!-- <button (click)='getCommitmentList()'>Get commitments</button> -->
-
-<!-- <ul *ngFor="let commitment of commitments">{{ commitment.name }} </ul> -->
+<mat-card>
+    <div class="d-flex flex-column justify-content-between">
+        <div>
+            <h3>Time</h3>
+            <div>
+                <mat-form-field>
+                    <input matInput type="text" [value]="getTaskName()" (input)="setTaskName($event.target.value)" />
+                </mat-form-field>
+                <span>{{displaySeconds}}</span>
+            </div>
+        </div>
+        <div>
+            <button mat-raised-button (click)='startTimer()'>Start timer!</button>
+            <button mat-raised-button (click)='pauseTimer()'>Pause timer!</button>
+            <button mat-raised-button (click)='saveDataPoint()'>Save data point!</button>
+        </div>
+    </div>
+</mat-card>

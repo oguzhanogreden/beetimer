@@ -1,1 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
+
+@import '~normalize.css';
+
+
+html, body {
+    // height: 100%;
+    padding-left: 1em;
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities"; // float
+@import "~bootstrap/scss/utilities"; // float
+@import "~bootstrap/scss/grid"; 
+
+// move these later
+.col {
+    flex: 1
+}
+
+mat-card {
+    box-sizing: border-box;
+    height: 100%;
+}
+
+
