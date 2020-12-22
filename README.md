@@ -9,8 +9,10 @@
 - [x] Use the modeled reminder object in ReminderService
 - [x] Alert service should have alertForReminder() method so that Reminder object properties can be read.
 - [ ] Make UI minimally presentable
-    - [ ] timer and reminder cards should have uniform layout
+    - [x] timer and reminder cards should have uniform layout
     - [ ] remove redundant buttons
+        - [x] remove timer start/pause buttons
+        - [ ] remove toggle reminder button: toggle by default
     - [ ] find a better place & size for timer display
     - [ ] highlight timer-reminder pairs
     - [ ] 'disable' reminder card if timer is off.

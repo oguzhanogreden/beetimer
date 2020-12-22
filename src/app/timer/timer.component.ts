@@ -16,6 +16,7 @@ export class TimerComponent implements OnInit {
   public displaySeconds: string;
   public commitments = [];
 
+  public isRunning: boolean;
 
   constructor(private timer: TimerService,
               private task: TaskService) { }
@@ -24,6 +25,12 @@ export class TimerComponent implements OnInit {
     this.timer.epochTimed.subscribe(
       (value) => {
         this.displaySeconds = value.toFormat("h:mm:ss");
+      }
+    )
+
+    this.timer.isRunning.subscribe(
+      (isRunning) => {
+        this.isRunning = isRunning;
       }
     )
   }

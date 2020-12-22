@@ -17,13 +17,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import "~bootstrap/scss/grid"; 
 
 // move these later
-.col {
-    flex: 1
+// .col {
+//     flex: 1
+// }
+
+div.container-fluid {
+    // border: 1px black solid;
 }
 
-mat-card {
-    box-sizing: border-box;
+div.col div.timer-elem {
     height: 100%;
 }
 
-
+.buttons {
+    margin-top: 15px;
+}
